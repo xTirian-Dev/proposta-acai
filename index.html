@@ -301,6 +301,108 @@
     background: var(--paper2); border-left: 3px solid var(--accent);
     padding: 1rem 1.5rem; margin-top: 2rem; font-size: 0.82rem; color: var(--ink2);
   }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+
+    /* NAV: esconde logo, tabs viram bottom bar */
+    nav {
+      padding: 0;
+      height: auto;
+      flex-direction: column;
+      position: fixed; bottom: 0; top: auto;
+      border-bottom: none;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-logo { display: none; }
+    .nav-tabs {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .nav-tab {
+      height: 52px;
+      font-size: 0.6rem;
+      padding: 0 0.2rem;
+      letter-spacing: 0.02em;
+      border-bottom: none;
+      border-top: 2px solid transparent;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2px;
+    }
+    .nav-tab.active { border-top-color: var(--accent); border-bottom: none; }
+    .nav-num { position: static; font-size: 0.65rem; color: var(--accent3); }
+
+    /* pages: padding-top menor (nav foi pra baixo), padding-bottom pra não sobrepor */
+    .page { padding-top: 0; padding-bottom: 72px; }
+    #p-capa.active { display: flex; }
+
+    /* CAPA: empilha verticalmente */
+    .capa-hero { grid-template-columns: 1fr; min-height: auto; }
+    .capa-left { padding: 2.5rem 1.5rem 2rem; border-right: none; border-bottom: 1px solid var(--border); }
+    .capa-h1 { font-size: 2rem; }
+    .capa-desc { margin-bottom: 2rem; }
+    .capa-right { padding: 2rem 1.5rem 2.5rem; min-height: auto; }
+    .capa-bg-text { font-size: 5rem; }
+    .capa-footer {
+      flex-direction: column; gap: 0.5rem;
+      padding: 1rem 1.5rem; text-align: center;
+    }
+    .capa-footer-r { flex-direction: column; gap: 0.3rem; align-items: center; }
+
+    /* inner pages */
+    .page-inner { padding: 2rem 1.2rem; }
+    .page-title { font-size: 1.5rem; }
+
+    /* escopo: 1 coluna */
+    .modules-grid { grid-template-columns: 1fr; }
+    .phase-header { flex-wrap: wrap; gap: 0.5rem; }
+    .phase-duration { margin-left: 0; width: 100%; }
+    .fora-grid { grid-template-columns: 1fr; }
+
+    /* cronograma */
+    .tl-week { grid-template-columns: 52px 1fr; gap: 0.8rem; }
+    .tl-wlabel { font-size: 0.65rem; }
+    .tl-pill { font-size: 0.7rem; padding: 3px 8px; }
+
+    /* custos: tabelas em cards empilhados */
+    .cost-table thead { display: none; }
+    .cost-table tbody tr {
+      display: flex; flex-direction: column;
+      padding: 0.8rem; border-bottom: 1px solid var(--border);
+      gap: 0.3rem;
+    }
+    .cost-table td {
+      padding: 0; border-bottom: none;
+      font-size: 0.82rem;
+    }
+    .cost-table td:last-child {
+      text-align: left !important;
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--accent); margin-top: 0.3rem;
+    }
+    .cost-table td[style*="color:var(--ink3)"] { display: none; } /* esconde coluna descrição */
+    .cost-total { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem; }
+    .ct-divider { width: 100%; height: 1px; }
+    .ct-val { font-size: 1.4rem; }
+    .invest-box { grid-template-columns: 1fr; gap: 1rem; padding: 1.2rem; }
+    .invest-val { font-size: 1.6rem; }
+    .invest-breakdown { text-align: left; }
+    .invest-breakdown-row { justify-content: flex-start; }
+
+    /* termos */
+    .terms-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .pay-row { grid-template-columns: 36px 1fr; gap: 0.8rem; }
+    .pay-val { grid-column: 2; font-size: 0.9rem; color: var(--accent); font-weight: 600; }
+    .pay-num { font-size: 1rem; }
+    .sign-area { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 400px) {
+    .capa-h1 { font-size: 1.7rem; }
+    .nav-tab { font-size: 0.55rem; }
+  }
 </style>
 </head>
 <body>
@@ -328,11 +430,11 @@
       <div class="capa-meta">
         <div class="capa-meta-row">
           <span class="capa-meta-label">Preparado por</span>
-          <span class="capa-meta-val">Matheus Fernandes Cunha/ Engenheiro de Software</span>
+          <span class="capa-meta-val">Seu Nome / Empresa</span>
         </div>
         <div class="capa-meta-row">
           <span class="capa-meta-label">Destinatário</span>
-          <span class="capa-meta-val">Monk Studio</span>
+          <span class="capa-meta-val">Cliente — Empresa S.A.</span>
         </div>
         <div class="capa-meta-row">
           <span class="capa-meta-label">Data</span>
@@ -397,7 +499,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">Setup & Infraestrutura</span>
-            <span class="module-h">40h</span>
+            <span class="module-h">60h</span>
           </div>
           <ul class="module-tasks">
             <li>API Laravel com autenticação e roles</li>
@@ -408,7 +510,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">CRM — Contatos & Pipeline</span>
-            <span class="module-h">70h</span>
+            <span class="module-h">120h</span>
           </div>
           <ul class="module-tasks">
             <li>CRUD completo de contatos e leads</li>
@@ -419,7 +521,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">WhatsApp (Evolution API)</span>
-            <span class="module-h">90h</span>
+            <span class="module-h">120h</span>
           </div>
           <ul class="module-tasks">
             <li>Recebimento e envio de mensagens</li>
@@ -430,10 +532,10 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">IA Conversacional (básica)</span>
-            <span class="module-h">60h</span>
+            <span class="module-h">100h</span>
           </div>
           <ul class="module-tasks">
-            <li>Integração DeepSeek V3.2 via API</li>
+            <li>Integração GPT-4o via OpenAI API</li>
             <li>Prompts contextualizados por contato</li>
             <li>Fluxo de handoff IA → agente humano</li>
           </ul>
@@ -454,7 +556,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">Pipeline Avançado</span>
-            <span class="module-h">50h</span>
+            <span class="module-h">80h</span>
           </div>
           <ul class="module-tasks">
             <li>Estágios e campos customizáveis</li>
@@ -465,7 +567,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">IA Avançada & WhatsApp Plus</span>
-            <span class="module-h">80h</span>
+            <span class="module-h">120h</span>
           </div>
           <ul class="module-tasks">
             <li>Memória de conversa (contexto/RAG)</li>
@@ -476,7 +578,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">Relatórios & Dashboards</span>
-            <span class="module-h">60h</span>
+            <span class="module-h">80h</span>
           </div>
           <ul class="module-tasks">
             <li>Dashboard com KPIs de marketing</li>
@@ -487,7 +589,7 @@
         <div class="module-card">
           <div class="module-card-head">
             <span class="module-name">Testes & Entrega</span>
-            <span class="module-h">50h</span>
+            <span class="module-h">80h</span>
           </div>
           <ul class="module-tasks">
             <li>Testes com equipe de marketing (5 pax)</li>
@@ -507,11 +609,12 @@
       <div class="fora-item"><span class="fora-x">✕</span> Busca avançada com filtros complexos</div>
       <div class="fora-item"><span class="fora-x">✕</span> Integração com Meta Pixel / Conversions API</div>
       <div class="fora-item"><span class="fora-x">✕</span> App mobile (iOS / Android)</div>
-      <div class="fora-item"><span class="fora-x">✕</span> Importação em massa por integração externa</div>      
+      <div class="fora-item"><span class="fora-x">✕</span> Importação em massa por integração externa</div>
+      <div class="fora-item"><span class="fora-x">✕</span> Suporte pós-lançamento (plano à parte)</div>
     </div>
   </div>
 </div>
- 
+
 <!-- ══════════════════════════════════════
      PAGE 3 — CRONOGRAMA
 ══════════════════════════════════════ -->
