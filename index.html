@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Comercial — CRM & Automação WhatsApp com IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0f0e0c;
+    --ink2: #3a3832;
+    --ink3: #7a7870;
+    --paper: #f9f7f2;
+    --paper2: #f0ede4;
+    --paper3: #e5e1d6;
+    --accent: #c8873a;
+    --accent2: #1a5c3a;
+    --accent3: #c84040;
+    --border: #d8d4c8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  html, body { height: 100%; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    padding: 0 2rem;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--serif); font-size: 1.05rem; color: var(--ink);
+    margin-right: auto; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-tabs { display: flex; gap: 0; }
+  .nav-tab {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+    color: var(--ink3); padding: 0 1.1rem; height: 56px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: color 0.18s, border-color 0.18s;
+    position: relative;
+  }
+  .nav-tab:hover { color: var(--ink); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-num {
+    position: absolute; top: 10px; right: 6px;
+    font-size: 0.6rem; color: var(--accent3); font-family: var(--mono);
+  }
+
+  /* PAGES */
+  .page { display: none; padding-top: 56px; min-height: 100vh; animation: fadeUp 0.35s ease; }
+  .page.active { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── PAGE 1: CAPA ── */
+  #p-capa {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  #p-capa.active { display: flex; }
+  .capa-hero {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 56px);
+  }
+  .capa-left {
+    padding: 5rem 4rem 4rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .capa-tag {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .capa-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  .capa-h1 {
+    font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700; line-height: 1.1; color: var(--ink);
+    margin-bottom: 1.8rem; letter-spacing: -0.02em;
+  }
+  .capa-h1 em { color: var(--accent); font-style: normal; }
+  .capa-desc {
+    font-size: 1rem; color: var(--ink2); line-height: 1.7;
+    max-width: 44ch; margin-bottom: 3rem;
+  }
+  .capa-meta { display: flex; flex-direction: column; gap: 0.6rem; }
+  .capa-meta-row { display: flex; gap: 1rem; align-items: baseline; }
+  .capa-meta-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink3); min-width: 90px; }
+  .capa-meta-val { font-size: 0.95rem; color: var(--ink); font-weight: 500; }
+  .capa-right {
+    background: var(--ink);
+    padding: 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative; overflow: hidden;
+  }
+  .capa-bg-text {
+    position: absolute; top: 2rem; left: 2rem; right: 2rem;
+    font-family: var(--serif); font-size: 9rem; font-weight: 700;
+    color: rgba(255,255,255,0.03); line-height: 1;
+    pointer-events: none; user-select: none;
+  }
+  .capa-pillars { display: flex; flex-direction: column; gap: 1.5rem; position: relative; z-index: 1; }
+  .pillar {
+    border-left: 2px solid var(--accent);
+    padding: 1rem 1.5rem;
+    background: rgba(255,255,255,0.04);
+  }
+  .pillar-n { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+  .pillar-t { font-family: var(--serif); font-size: 1.05rem; color: #f9f7f2; margin-bottom: 0.3rem; }
+  .pillar-d { font-size: 0.8rem; color: rgba(249,247,242,0.5); line-height: 1.5; }
+  .capa-footer {
+    background: var(--paper2); border-top: 1px solid var(--border);
+    padding: 1rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .capa-footer-l { font-size: 0.75rem; color: var(--ink3); }
+  .capa-footer-r {
+    font-size: 0.8rem; color: var(--ink2);
+    display: flex; gap: 2rem;
+  }
+  .capa-footer-r span { font-weight: 500; color: var(--accent); }
+
+  /* ── PAGE 2: ESCOPO ── */
+  .page-inner { max-width: 960px; margin: 0 auto; padding: 4rem 2rem; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::before { content:''; display:block; width:20px; height:1px; background:var(--accent); }
+  .page-title {
+    font-family: var(--serif); font-size: 2rem; font-weight: 700;
+    color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.02em;
+  }
+  .page-subtitle { font-size: 0.95rem; color: var(--ink3); margin-bottom: 3rem; }
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+  /* Escopo grid */
+  .escopo-phase { margin-bottom: 2.5rem; }
+  .phase-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;
+  }
+  .phase-badge {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+    padding: 4px 10px; border-radius: 2px; font-weight: 500;
+  }
+  .phase-badge.mvp { background: #1a5c3a; color: #a8edc8; }
+  .phase-badge.final { background: #3a2e1a; color: #f0c87a; }
+  .phase-name { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); font-weight: 600; }
+  .phase-duration { margin-left: auto; font-size: 0.78rem; color: var(--ink3); font-family: var(--mono); }
+  .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .module-card {
+    background: var(--paper); padding: 1.2rem 1.4rem;
+  }
+  .module-card-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.6rem; }
+  .module-name { font-size: 0.9rem; font-weight: 500; color: var(--ink); }
+  .module-h { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); }
+  .module-tasks { list-style: none; }
+  .module-tasks li {
+    font-size: 0.78rem; color: var(--ink3); padding: 3px 0;
+    border-bottom: 1px solid var(--paper3);
+    display: flex; gap: 0.5rem;
+  }
+  .module-tasks li:last-child { border-bottom: none; }
+  .module-tasks li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+  /* fora escopo */
+  .fora-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 1rem; }
+  .fora-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.82rem; color: var(--ink3);
+    padding: 0.5rem 0.8rem; background: var(--paper2);
+    border: 1px solid var(--border); border-radius: 2px;
+  }
+  .fora-x { color: var(--accent3); font-weight: 700; font-size: 0.9rem; }
+
+  /* ── PAGE 3: CRONOGRAMA ── */
+  .timeline { position: relative; }
+  .tl-week {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 1.5rem; margin-bottom: 0;
+    border-top: 1px solid var(--border); padding: 1.2rem 0;
+  }
+  .tl-week:last-child { border-bottom: 1px solid var(--border); }
+  .tl-wlabel {
+    font-family: var(--mono); font-size: 0.72rem; color: var(--ink3);
+    padding-top: 3px; font-weight: 500;
+  }
+  .tl-wlabel.phase-mvp { color: var(--accent2); }
+  .tl-wlabel.phase-final { color: var(--accent); }
+  .tl-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tl-pill {
+    font-size: 0.76rem; padding: 4px 12px;
+    border: 1px solid; border-radius: 2px;
+  }
+  .tl-pill.blue { background: #e8f0fb; color: #1a3a6c; border-color: #b0c8f0; }
+  .tl-pill.green { background: #e4f5ec; color: #1a5c3a; border-color: #9adabc; }
+  .tl-pill.amber { background: #fdf3e3; color: #7a4a10; border-color: #f0c87a; }
+  .tl-pill.purple { background: #f0ecfc; color: #3a2080; border-color: #c0a8f0; }
+  .tl-pill.gray { background: var(--paper2); color: var(--ink2); border-color: var(--border); }
+  .tl-month {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--paper); background: var(--ink); padding: 4px 12px;
+    margin: 1.5rem 0 0; display: inline-block; font-weight: 500;
+  }
+
+  /* ── PAGE 4: CUSTOS ── */
+  .cost-section { margin-bottom: 3rem; }
+  .cost-section-title {
+    font-family: var(--serif); font-size: 1.1rem; font-weight: 600;
+    color: var(--ink); margin-bottom: 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .cost-table { width: 100%; border-collapse: collapse; }
+  .cost-table th {
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink3); font-weight: 500; padding: 0.6rem 0.8rem;
+    text-align: left; background: var(--paper2); border-bottom: 1px solid var(--border);
+  }
+  .cost-table td {
+    padding: 0.75rem 0.8rem; border-bottom: 1px solid var(--paper3);
+    font-size: 0.86rem; color: var(--ink2); vertical-align: top;
+  }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-table tr:hover td { background: var(--paper2); }
+  .cost-item-name { color: var(--ink); font-weight: 500; }
+  .cost-item-note { font-size: 0.73rem; color: var(--ink3); margin-top: 2px; }
+  .cost-val { font-family: var(--mono); font-size: 0.88rem; white-space: nowrap; }
+  .cost-val.free { color: var(--accent2); }
+  .cost-val.paid { color: var(--ink); }
+  .cost-badge {
+    font-size: 0.65rem; padding: 2px 7px; border-radius: 2px;
+    font-weight: 500; letter-spacing: 0.04em; white-space: nowrap;
+    display: inline-block; margin-left: 6px;
+  }
+  .badge-free { background: #e4f5ec; color: #1a5c3a; }
+  .badge-var { background: #fdf3e3; color: #7a4a10; }
+  .badge-fixed { background: var(--paper3); color: var(--ink2); }
+
+  /* total box */
+  .cost-total {
+    background: var(--ink); color: var(--paper);
+    padding: 2rem 2.5rem; margin-top: 2rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  .ct-block { display: flex; flex-direction: column; gap: 0.3rem; }
+  .ct-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(249,247,242,0.5); }
+  .ct-val { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--paper); }
+  .ct-val span { font-size: 1rem; color: var(--accent); }
+  .ct-note { font-size: 0.75rem; color: rgba(249,247,242,0.4); margin-top: 0.2rem; }
+  .ct-divider { width: 1px; background: rgba(255,255,255,0.1); }
+
+  /* investimento */
+  .invest-box {
+    border: 1px solid var(--border); padding: 1.5rem 2rem; margin-top: 1.5rem;
+    background: var(--paper2); display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
+  }
+  .invest-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); margin-bottom: 0.4rem; }
+  .invest-val { font-family: var(--serif); font-size: 2.2rem; font-weight: 700; color: var(--accent); }
+  .invest-note { font-size: 0.8rem; color: var(--ink3); margin-top: 0.3rem; }
+  .invest-breakdown { text-align: right; }
+  .invest-breakdown-row { display: flex; gap: 1.5rem; justify-content: flex-end; font-size: 0.82rem; }
+  .ibr-label { color: var(--ink3); }
+  .ibr-val { font-family: var(--mono); font-weight: 500; color: var(--ink); min-width: 80px; text-align: right; }
+
+  /* ── PAGE 5: TERMOS ── */
+  .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+  .term-block { }
+  .term-title { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.8rem; }
+  .term-body { font-size: 0.85rem; color: var(--ink2); line-height: 1.8; }
+  .term-body strong { color: var(--ink); }
+  .pay-row {
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 1rem; padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pay-num { font-family: var(--mono); font-size: 1.2rem; color: var(--accent); font-weight: 500; }
+  .pay-desc { font-size: 0.85rem; }
+  .pay-desc strong { display: block; color: var(--ink); margin-bottom: 2px; }
+  .pay-desc span { font-size: 0.76rem; color: var(--ink3); }
+  .pay-val { font-family: var(--mono); font-size: 0.95rem; font-weight: 500; color: var(--ink); text-align: right; white-space: nowrap; }
+  .sign-area {
+    margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  }
+  .sign-block { }
+  .sign-line { border-bottom: 1px solid var(--ink); margin-bottom: 0.6rem; padding-top: 3rem; }
+  .sign-label { font-size: 0.72rem; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .sign-name { font-size: 0.85rem; color: var(--ink); font-weight: 500; margin-top: 2px; }
+  .validity-note {
+    background: var(--paper2); border-left: 3px solid var(--accent);
+    padding: 1rem 1.5rem; margin-top: 2rem; font-size: 0.82rem; color: var(--ink2);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Proposta <span>Comercial</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="goTo('p-capa', this)">Capa<span class="nav-num">01</span></button>
+    <button class="nav-tab" onclick="goTo('p-escopo', this)">Escopo<span class="nav-num">02</span></button>
+    <button class="nav-tab" onclick="goTo('p-cronograma', this)">Cronograma<span class="nav-num">03</span></button>
+    <button class="nav-tab" onclick="goTo('p-custos', this)">Custos<span class="nav-num">04</span></button>
+    <button class="nav-tab" onclick="goTo('p-termos', this)">Termos<span class="nav-num">05</span></button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — CAPA
+══════════════════════════════════════ -->
+<div id="p-capa" class="page active">
+  <div class="capa-hero">
+    <div class="capa-left">
+      <div class="capa-tag">Proposta Comercial Confidencial</div>
+      <h1 class="capa-h1">CRM & Automação<br>WhatsApp com <em>IA</em><br>Conversacional</h1>
+      <p class="capa-desc">Plataforma proprietária de gestão de relacionamento com clientes, automação de comunicação via WhatsApp e inteligência artificial para o time de marketing.</p>
+      <div class="capa-meta">
+        <div class="capa-meta-row">
+          <span class="capa-meta-label">Preparado por</span>
+          <span class="capa-meta-val">Seu Nome / Empresa</span>
+        </div>
+        <div class="capa-meta-row">
+          <span class="capa-meta-label">Destinatário</span>
+          <span class="capa-meta-val">Cliente — Empresa S.A.</span>
+        </div>
+        <div class="capa-meta-row">
+          <span class="capa-meta-label">Data</span>
+          <span class="capa-meta-val">Março de 2026</span>
+        </div>
+        <div class="capa-meta-row">
+          <span class="capa-meta-label">Validade</span>
+          <span class="capa-meta-val">30 dias</span>
+        </div>
+        <div class="capa-meta-row">
+          <span class="capa-meta-label">Versão</span>
+          <span class="capa-meta-val">v1.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="capa-right">
+      <div class="capa-bg-text">CRM</div>
+      <div class="capa-pillars">
+        <div class="pillar">
+          <div class="pillar-n">01 — Gestão</div>
+          <div class="pillar-t">CRM Proprietário</div>
+          <div class="pillar-d">Pipeline de vendas, contatos, leads, histórico completo e relatórios em tempo real.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-n">02 — Comunicação</div>
+          <div class="pillar-t">WhatsApp Business</div>
+          <div class="pillar-d">Integração via Evolution API com multi-sessão, histórico unificado e fila de mensagens.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-n">03 — Inteligência</div>
+          <div class="pillar-t">IA Conversacional</div>
+          <div class="pillar-d">Atendimento automatizado com GPT-4o, handoff para humano e contexto do contato.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="capa-footer">
+    <div class="capa-footer-l">Documento confidencial — uso exclusivo interno</div>
+    <div class="capa-footer-r">
+      MVP: <span>1 mês</span> &nbsp;·&nbsp; Entrega Final: <span>2 meses</span> &nbsp;·&nbsp; Investimento: <span>A consultar →</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — ESCOPO
+══════════════════════════════════════ -->
+<div id="p-escopo" class="page">
+  <div class="page-inner">
+    <div class="section-label">Escopo do Projeto</div>
+    <h2 class="page-title">O que será entregue</h2>
+    <p class="page-subtitle">O projeto é dividido em duas fases com entregas incrementais e critérios de aceite claros.</p>
+
+    <!-- FASE 1 -->
+    <div class="escopo-phase">
+      <div class="phase-header">
+        <span class="phase-badge mvp">FASE 1 — MVP</span>
+        <span class="phase-name">Produto Mínimo Viável</span>
+        <span class="phase-duration">Semanas 1–4</span>
+      </div>
+      <div class="modules-grid">
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">Setup & Infraestrutura</span>
+            <span class="module-h">60h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>API Laravel com autenticação e roles</li>
+            <li>Frontend Vue.js + Pinia + Router</li>
+            <li>Docker + CI/CD + ambiente de produção</li>
+          </ul>
+        </div>
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">CRM — Contatos & Pipeline</span>
+            <span class="module-h">120h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>CRUD completo de contatos e leads</li>
+            <li>Kanban de pipeline com estágios fixos</li>
+            <li>Tags, segmentação e histórico básico</li>
+          </ul>
+        </div>
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">WhatsApp (Evolution API)</span>
+            <span class="module-h">120h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>Recebimento e envio de mensagens</li>
+            <li>Interface de chat integrada ao CRM</li>
+            <li>Sync de contatos WhatsApp ↔ CRM</li>
+          </ul>
+        </div>
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">IA Conversacional (básica)</span>
+            <span class="module-h">100h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>Integração GPT-4o via OpenAI API</li>
+            <li>Prompts contextualizados por contato</li>
+            <li>Fluxo de handoff IA → agente humano</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- FASE 2 -->
+    <div class="escopo-phase">
+      <div class="phase-header">
+        <span class="phase-badge final">FASE 2 — FINAL</span>
+        <span class="phase-name">Produto Completo</span>
+        <span class="phase-duration">Semanas 5–8</span>
+      </div>
+      <div class="modules-grid">
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">Pipeline Avançado</span>
+            <span class="module-h">80h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>Estágios e campos customizáveis</li>
+            <li>Automação de estágio por regras</li>
+            <li>Notificações internas e follow-ups</li>
+          </ul>
+        </div>
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">IA Avançada & WhatsApp Plus</span>
+            <span class="module-h">120h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>Memória de conversa (contexto/RAG)</li>
+            <li>Painel de configuração de bots</li>
+            <li>Multi-sessão WhatsApp + Redis Queue</li>
+          </ul>
+        </div>
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">Relatórios & Dashboards</span>
+            <span class="module-h">80h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>Dashboard com KPIs de marketing</li>
+            <li>Relatórios de funil e conversão</li>
+            <li>Gráficos e visualizações interativas</li>
+          </ul>
+        </div>
+        <div class="module-card">
+          <div class="module-card-head">
+            <span class="module-name">Testes & Entrega</span>
+            <span class="module-h">80h</span>
+          </div>
+          <ul class="module-tasks">
+            <li>Testes com equipe de marketing (5 pax)</li>
+            <li>Correções de UX e bugs reportados</li>
+            <li>Documentação e treinamento básico</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Fora do Escopo</div>
+    <p style="font-size:0.85rem;color:var(--ink3);margin-bottom:1rem;">Os itens abaixo não estão incluídos nesta proposta e podem ser orçados separadamente.</p>
+    <div class="fora-grid">
+      <div class="fora-item"><span class="fora-x">✕</span> Exportação de relatórios (PDF/Excel)</div>
+      <div class="fora-item"><span class="fora-x">✕</span> Busca avançada com filtros complexos</div>
+      <div class="fora-item"><span class="fora-x">✕</span> Integração com Meta Pixel / Conversions API</div>
+      <div class="fora-item"><span class="fora-x">✕</span> App mobile (iOS / Android)</div>
+      <div class="fora-item"><span class="fora-x">✕</span> Importação em massa por integração externa</div>
+      <div class="fora-item"><span class="fora-x">✕</span> Suporte pós-lançamento (plano à parte)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — CRONOGRAMA
+══════════════════════════════════════ -->
+<div id="p-cronograma" class="page">
+  <div class="page-inner">
+    <div class="section-label">Cronograma de Entregas</div>
+    <h2 class="page-title">8 semanas, 2 marcos</h2>
+    <p class="page-subtitle">Desenvolvimento contínuo com entrega incremental. O MVP está disponível para uso no fim do mês 1.</p>
+
+    <div class="timeline">
+      <span class="tl-month">Mês 1 — MVP</span>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-mvp">Sem 1</div>
+        <div class="tl-pills">
+          <span class="tl-pill blue">Setup Laravel + Auth + Roles</span>
+          <span class="tl-pill blue">Setup Vue.js + Pinia + Router</span>
+          <span class="tl-pill blue">Docker + CI/CD básico</span>
+          <span class="tl-pill blue">Design system / Tailwind</span>
+        </div>
+      </div>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-mvp">Sem 2</div>
+        <div class="tl-pills">
+          <span class="tl-pill gray">CRUD contatos & leads</span>
+          <span class="tl-pill gray">Tags e segmentação básica</span>
+          <span class="tl-pill gray">Pipeline Kanban (estágios fixos)</span>
+          <span class="tl-pill gray">Histórico de interações simples</span>
+        </div>
+      </div>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-mvp">Sem 3</div>
+        <div class="tl-pills">
+          <span class="tl-pill green">Setup Evolution API</span>
+          <span class="tl-pill green">Webhooks → recebimento de msgs</span>
+          <span class="tl-pill green">Envio de mensagens</span>
+          <span class="tl-pill green">Chat UI no Vue.js</span>
+          <span class="tl-pill green">Sync CRM ↔ WhatsApp</span>
+        </div>
+      </div>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-mvp">Sem 4</div>
+        <div class="tl-pills">
+          <span class="tl-pill amber">Integração GPT-4o (OpenAI API)</span>
+          <span class="tl-pill amber">Prompts por contexto do contato</span>
+          <span class="tl-pill amber">Fluxo IA → handoff humano</span>
+          <span class="tl-pill amber">Testes internos do MVP</span>
+        </div>
+      </div>
+
+      <span class="tl-month" style="margin-top:2rem;">Mês 2 — Entrega Final</span>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-final">Sem 5</div>
+        <div class="tl-pills">
+          <span class="tl-pill gray">Pipeline: estágios customizáveis</span>
+          <span class="tl-pill gray">Automação de estágio por regras</span>
+          <span class="tl-pill gray">Fila de mensagens (Redis Queues)</span>
+          <span class="tl-pill gray">Notificações internas</span>
+        </div>
+      </div>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-final">Sem 6</div>
+        <div class="tl-pills">
+          <span class="tl-pill amber">Memória de conversa (RAG)</span>
+          <span class="tl-pill amber">Painel de configuração de bots</span>
+          <span class="tl-pill amber">Multi-sessão WhatsApp</span>
+        </div>
+      </div>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-final">Sem 7</div>
+        <div class="tl-pills">
+          <span class="tl-pill purple">Dashboard KPIs de marketing</span>
+          <span class="tl-pill purple">Relatórios de funil e conversão</span>
+          <span class="tl-pill purple">Gráficos e visualizações</span>
+        </div>
+      </div>
+      <div class="tl-week">
+        <div class="tl-wlabel phase-final">Sem 8</div>
+        <div class="tl-pills">
+          <span class="tl-pill gray">Testes com equipe de marketing</span>
+          <span class="tl-pill gray">Correções UX / bugs</span>
+          <span class="tl-pill gray">Documentação e onboarding</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 — CUSTOS
+══════════════════════════════════════ -->
+<div id="p-custos" class="page">
+  <div class="page-inner">
+    <div class="section-label">Estimativa de Custos</div>
+    <h2 class="page-title">Investimento total do projeto</h2>
+    <p class="page-subtitle">Custos de desenvolvimento + infraestrutura recorrente mensal. Valores em USD convertidos indicativamente.</p>
+
+    <!-- INFRAESTRUTURA -->
+    <div class="cost-section">
+      <div class="cost-section-title">Infraestrutura Mensal (responsabilidade do cliente)</div>
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Serviço</th>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th style="text-align:right">Custo/mês</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="cost-item-name">VPS Único (Docker)</div>
+              <div class="cost-item-note">Hetzner CX31 — 4 vCPU, 8GB RAM, 80GB SSD · todos os serviços em containers isolados</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Laravel + Vue + Redis + Evolution API (Docker Compose). Migração para servidor dedicado disponível a qualquer momento.</td>
+            <td><span class="cost-badge badge-fixed">Fixo</span></td>
+            <td class="cost-val paid" style="text-align:right">~$20 USD</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="cost-item-name">Evolution API (self-hosted)</div>
+              <div class="cost-item-note">Open source — roda como container Docker no VPS. Sem custo de licença.</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Integração WhatsApp (Baileys) — gratuito e sem limitações</td>
+            <td><span class="cost-badge badge-free">Gratuito</span></td>
+            <td class="cost-val free" style="text-align:right">R$ 0</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="cost-item-name">Domínio (.com.br)</div>
+              <div class="cost-item-note">Registro.br — renovação anual (~R$ 40/ano)</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Nome de domínio do sistema</td>
+            <td><span class="cost-badge badge-fixed">Anual</span></td>
+            <td class="cost-val paid" style="text-align:right">~R$ 4/mês</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="cost-item-name">SSL / CDN</div>
+              <div class="cost-item-note">Let's Encrypt (SSL grátis) + Cloudflare Free</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Segurança e performance</td>
+            <td><span class="cost-badge badge-free">Gratuito</span></td>
+            <td class="cost-val free" style="text-align:right">R$ 0</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="cost-item-name">Backups automatizados</div>
+              <div class="cost-item-note">Hetzner Backup — 20% do custo do VPS. Snapshots diários.</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Proteção contra perda de dados</td>
+            <td><span class="cost-badge badge-fixed">Fixo</span></td>
+            <td class="cost-val paid" style="text-align:right">~$4 USD</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- IA -->
+    <div class="cost-section">
+      <div class="cost-section-title">IA Conversacional — DeepSeek API (variável por uso)</div>
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Modelo</th>
+            <th>Uso recomendado</th>
+            <th>Preço por 1M tokens</th>
+            <th style="text-align:right">Estimativa/mês</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="cost-item-name">DeepSeek V3.2</div>
+              <div class="cost-item-note">Conversas gerais, atendimento, contexto do contato</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">IA principal do chatbot — 95% mais barato que GPT-4o com performance equivalente</td>
+            <td class="cost-val" style="font-size:0.8rem">$0,28 input · $0,42 output</td>
+            <td class="cost-val" style="text-align:right">
+              <span class="cost-badge badge-var">Variável</span><br>
+              <span style="font-size:0.8rem">~$2–15/mês</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="cost-item-name">DeepSeek V3.2 (cache hit)</div>
+              <div class="cost-item-note">Prompts repetitivos com mesmo prefixo (system prompt fixo)</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Cache automático — 90% de desconto em contexto reutilizado</td>
+            <td class="cost-val" style="font-size:0.8rem">$0,028 input (cache)</td>
+            <td class="cost-val" style="text-align:right">
+              <span class="cost-badge badge-free">Quase zero</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="cost-item-name">Créditos iniciais (novo cadastro)</div>
+              <div class="cost-item-note">5 milhões de tokens grátis ao criar conta — sem cartão de crédito</div>
+            </td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Cobre os primeiros meses de desenvolvimento e testes</td>
+            <td class="cost-val" style="font-size:0.8rem">—</td>
+            <td class="cost-val free" style="text-align:right">R$ 0 (inicial)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.75rem;color:var(--ink3);margin-top:0.8rem;">* Estimativas para ~5 usuários com ~500 conversas/mês. Custo pode escalar para GPT-4o ou Claude no futuro se necessário — a arquitetura suporta troca de provedor.</p>
+    </div>
+
+    <!-- DESENVOLVIMENTO -->
+    <div class="cost-section">
+      <div class="cost-section-title">Desenvolvimento & Manutenção</div>
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Recorrência</th>
+            <th style="text-align:right">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="cost-item-name">Implementação completa</div><div class="cost-item-note">Fases 1 e 2 — MVP + entrega final em 60 dias</div></td>
+            <td style="font-size:0.8rem;color:var(--ink3)">CRM, WhatsApp, IA conversacional, dashboards e treinamento da equipe</td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Único</td>
+            <td class="cost-val paid" style="text-align:right;font-size:1.05rem;font-weight:600;color:var(--accent)">R$ 2.400</td>
+          </tr>
+          <tr>
+            <td><div class="cost-item-name">Manutenção mensal</div><div class="cost-item-note">A partir do mês 3, após entrega final</div></td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Correção de bugs, atualizações de segurança, pequenas melhorias (&lt;4h/mês) e suporte técnico à equipe</td>
+            <td style="font-size:0.8rem;color:var(--ink3)">Mensal</td>
+            <td class="cost-val paid" style="text-align:right;font-size:1.05rem;font-weight:600;color:var(--accent)">R$ 500/mês</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="background:var(--paper2);border:1px solid var(--border);border-left:3px solid var(--accent2);padding:0.8rem 1.2rem;margin-top:1rem;font-size:0.8rem;color:var(--ink2);">
+        <strong style="color:var(--ink)">Sobre a manutenção:</strong> O cliente arca com os custos de infraestrutura (servidor + IA). O valor de R$ 500/mês cobre a disponibilidade técnica do desenvolvedor: garantia de funcionamento, atualizações proativas, resposta a incidentes e melhorias incrementais. Sem este contrato, o suporte é cobrado por hora avulsa.
+      </div>
+    </div>
+
+    <!-- TOTAL INFRA -->
+    <div class="cost-total">
+      <div class="ct-block">
+        <div class="ct-label">Infraestrutura mensal (cliente paga diretamente)</div>
+        <div class="ct-val">~$24 USD <span>+ uso IA</span></div>
+        <div class="ct-note">≈ R$ 140/mês de servidor + ~R$ 12–85/mês de IA (DeepSeek). Total: ~R$ 160–230/mês</div>
+      </div>
+      <div class="ct-divider"></div>
+      <div class="ct-block">
+        <div class="ct-label">Custo total no 1º ano (infra + manutenção)</div>
+        <div class="ct-val">~R$ 7.900</div>
+        <div class="ct-note">R$ 2.400 implementação + R$ 500×10 manutenção + ~R$ 2.000 infra anual</div>
+      </div>
+    </div>
+
+    <div class="invest-box">
+      <div>
+        <div class="invest-label">Resumo do investimento</div>
+        <div class="invest-val">R$ 2.400 <span style="font-size:1rem;color:var(--ink2)">+ R$ 500/mês</span></div>
+        <div class="invest-note">Implementação única + manutenção mensal opcional a partir do mês 3.</div>
+      </div>
+      <div class="invest-breakdown">
+        <div class="invest-breakdown-row">
+          <span class="ibr-label">50% na assinatura</span>
+          <span class="ibr-val">R$ 1.200</span>
+        </div>
+        <div class="invest-breakdown-row">
+          <span class="ibr-label">50% na entrega final</span>
+          <span class="ibr-val">R$ 1.200</span>
+        </div>
+        <div class="invest-breakdown-row" style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border)">
+          <span class="ibr-label">Manutenção (mês 3+)</span>
+          <span class="ibr-val">R$ 500/mês</span>
+        </div>
+        <div class="invest-breakdown-row">
+          <span class="ibr-label">Infra (cliente, direto)</span>
+          <span class="ibr-val">~R$ 160–230/mês</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 5 — TERMOS
+══════════════════════════════════════ -->
+<div id="p-termos" class="page">
+  <div class="page-inner">
+    <div class="section-label">Condições Comerciais</div>
+    <h2 class="page-title">Termos & Condições</h2>
+    <p class="page-subtitle">Condições gerais desta proposta. O contrato formal será redigido separadamente após aceite.</p>
+
+    <div class="terms-grid">
+      <div class="term-block">
+        <div class="term-title">Propriedade Intelectual</div>
+        <div class="term-body">Após <strong>quitação integral</strong> do desenvolvimento, todo o código-fonte, banco de dados e documentação produzidos passam a ser <strong>propriedade exclusiva do cliente</strong>. O desenvolvedor retém o direito de citar o projeto como referência em portfólio, sem expor dados ou informações confidenciais.</div>
+      </div>
+      <div class="term-block">
+        <div class="term-title">Suporte & Manutenção</div>
+        <div class="term-body">Os <strong>30 dias seguintes à entrega final</strong> incluem correção gratuita de bugs reportados. Manutenção evolutiva, novas funcionalidades e suporte contínuo são cobrados à parte, via plano mensal ou por demanda (hora técnica).</div>
+      </div>
+      <div class="term-block">
+        <div class="term-title">Alterações de Escopo</div>
+        <div class="term-body">Mudanças de escopo solicitadas durante o desenvolvimento serão avaliadas e, se aprovadas por ambas as partes, adicionarão custo e/ou prazo proporcionais ao impacto técnico. Alterações pequenas (&lt;4h) são absorvidas sem cobrança adicional.</div>
+      </div>
+      <div class="term-block">
+        <div class="term-title">Confidencialidade</div>
+        <div class="term-body">Todas as informações trocadas no contexto deste projeto são <strong>estritamente confidenciais</strong>. O desenvolvedor não divulgará dados de clientes, estratégias de negócio ou informações técnicas proprietárias a terceiros.</div>
+      </div>
+      <div class="term-block">
+        <div class="term-title">Infraestrutura & Serviços</div>
+        <div class="term-body">Os custos de infraestrutura (servidor, domínio, API de IA) são <strong>responsabilidade do cliente</strong> após a entrega. O desenvolvedor auxiliará na configuração inicial sem custo adicional, mas as contas e contratos com terceiros ficam no nome do cliente.</div>
+      </div>
+      <div class="term-block">
+        <div class="term-title">Prazo & Atrasos</div>
+        <div class="term-body">O prazo é estimado com base no escopo acordado. Atrasos causados por <strong>mudanças de requisito</strong>, demora em aprovações ou fornecimento de informações pelo cliente não são de responsabilidade do desenvolvedor e podem impactar o cronograma.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Cronograma de Pagamento</div>
+    <div class="pay-row">
+      <div class="pay-num">01</div>
+      <div class="pay-desc">
+        <strong>Entrada — Início do desenvolvimento</strong>
+        <span>Pago na assinatura do contrato, antes do início</span>
+      </div>
+      <div class="pay-val">R$ 1.200</div>
+    </div>
+    <div class="pay-row">
+      <div class="pay-num">02</div>
+      <div class="pay-desc">
+        <strong>Saldo — Entrega final (Semana 8)</strong>
+        <span>Pago após aceite da entrega completa e treinamento da equipe</span>
+      </div>
+      <div class="pay-val">R$ 1.200</div>
+    </div>
+    <div class="pay-row">
+      <div class="pay-num">03</div>
+      <div class="pay-desc">
+        <strong>Manutenção mensal — a partir do mês 3</strong>
+        <span>Opcional. Inclui suporte, correções e melhorias incrementais (&lt;4h/mês). Separado da infraestrutura, que o cliente paga diretamente ao provedor.</span>
+      </div>
+      <div class="pay-val">R$ 500/mês</div>
+    </div>
+
+    <div class="validity-note">
+      <strong>Validade desta proposta:</strong> 30 dias a partir da data de emissão (Março de 2026). Após este prazo, os valores e condições poderão ser revisados. Para aceitar, basta assinar abaixo ou responder por e-mail confirmando o aceite formal.
+    </div>
+
+    <div class="sign-area">
+      <div class="sign-block">
+        <div class="sign-line"></div>
+        <div class="sign-label">Contratado</div>
+        <div class="sign-name">Seu Nome · Desenvolvedor</div>
+      </div>
+      <div class="sign-block">
+        <div class="sign-line"></div>
+        <div class="sign-label">Contratante</div>
+        <div class="sign-name">Nome do Representante · Empresa S.A.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTo(pageId, tab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  tab.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
